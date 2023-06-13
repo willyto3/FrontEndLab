@@ -129,3 +129,15 @@ Axios es un Cliente basado en Promesas HTTP.
 npm i notistack
 funciones
 Notistack es una Libreria que muestra notificaciones en la pantalla.
+
+### 8. ZUSTAND
+
+npm i zustand
+funciones
+Notistack es una Libreria que maneja los estados de nuestra aplicación.
+
+### 9. JWT DECODE
+
+npm i jwt-decode
+funciones
+JWT Decode es una Libreria que Decodifica los Token realizados con JWT.

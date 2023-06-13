@@ -5,6 +5,10 @@ import { useState } from 'react'
 import { Formik } from 'formik'
 // Importación de NotiStack
 import { useSnackbar } from 'notistack'
+// Importación de JWT Decode
+import jwtDecode from 'jwt-decode'
+// Importacion de Use Navigate de React Router Dom
+import { useNavigate } from 'react-router-dom'
 
 // ? IMPORTACIÓN DE ELEMENTOS DE DISEÑO
 import Box from '@mui/material/Box'
@@ -17,6 +21,8 @@ import Button from '@mui/material/Button'
 import { useMediaQuery } from '@mui/material'
 
 // ? IMPORTACIÓN DE COMPONENTES
+// Importamos la tienda
+import { labStore } from '../../store/labStore'
 // Importamos el esquema del formulario de Usuario
 import { loginSchema, initialValues } from './loginSchema'
 // Login Usuario
@@ -25,7 +31,13 @@ import { login } from '../../api/auth'
 // ! COMIENZO DEL COMPONENTE LOGIN FORM
 const LoginForm = () => {
   // ? CONSTANTES
+  // se usa la tienda para darle valor al token
+  const setToken = labStore(state => state.setToken)
+  // se usa la tienda para darle valor al Usuario
+  const setUser = labStore(state => state.setUser)
   const { enqueueSnackbar } = useSnackbar()
+  // Se crea la constante de Navegación
+  const navigate = useNavigate()
   const pantallaCompleta = useMediaQuery('(min-width:600px')
   // Use State
   const [showPassword, setShowPassword] = useState(false)
@@ -40,18 +52,16 @@ const LoginForm = () => {
   // Funcion para manejar el boton del formulario
   const handleSubmit = async (values, onsubmitProps) => {
     const response = await login(values)
-    console.log(response)
 
     if (response.accessToken) {
-      console.log('Tenemos token')
-      // setToken(response.accessToken)
-      // const usuario = jwtDecode(response.accessToken)
-
-      // setUsuario(usuario.UserInfo)
-      // setColumnVisibilityModel(usuario.UserInfo)
-
+      setToken(response.accessToken)
+      const user = jwtDecode(response.accessToken)
+      setUser(user.UserInfo)
+      enqueueSnackbar(`${response.message}`, {
+        variant: 'success',
+      })
       onsubmitProps.resetForm()
-      // navigate('/dashboard')
+      navigate('/dashboard')
     } else {
       enqueueSnackbar(`${response.message}`, {
         variant: 'error',
@@ -76,6 +86,7 @@ const LoginForm = () => {
         handleChange,
         handleSubmit,
         resetForm,
+        isSubmitting,
       }) => (
         <form onSubmit={handleSubmit}>
           <Box
@@ -128,6 +139,7 @@ const LoginForm = () => {
           <Box>
             <Button
               fullWidth
+              disabled={isSubmitting}
               type='submit'
               variant='contained'
               sx={{

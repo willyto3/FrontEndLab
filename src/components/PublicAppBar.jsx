@@ -22,12 +22,19 @@ import MenuItem from '@mui/material/MenuItem'
 import { ArrowDropDownOutlined } from '@mui/icons-material'
 import { Avatar } from '@mui/material'
 
+// ? IMPORTACIÓN DE COMPONENTES
+// Importamos la tienda
+import { labStore } from '../store/labStore'
+
 // ! INICIO DEL COMPONENTE PUBLIC APP BAR
 const PublicAppBar = () => {
-  //! TEMPORAL
-  const token = ''
-
   // ? CONSTANTES
+  // se usa la tienda para conocer el valor del usuario
+  const user = labStore(state => state.user)
+  // se usa la tienda para conocer el valor del Token
+  const token = labStore(state => state.token)
+  // se usa la tienda para ejeutat la funcion logout
+  const logout = labStore(state => state.logout)
   // Usamos la navegacion
   const navigate = useNavigate()
   const drawerWidth = 340
@@ -53,7 +60,7 @@ const PublicAppBar = () => {
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
       <Typography variant='h3' sx={{ my: 2 }}>
-        MUI
+        Lab APIAY
       </Typography>
       <Divider />
       <List>
@@ -102,7 +109,7 @@ const PublicAppBar = () => {
             }}
             onClick={() => navigate('/')}
           >
-            MUI
+            Lab APIAY
           </Typography>
           <Box
             sx={{
@@ -142,10 +149,10 @@ const PublicAppBar = () => {
 
                   <Box textAlign='left'>
                     <Typography variant='body2' color='white'>
-                      {'usuario.nombres'} {'usuario.apellidos'}
+                      {user.firstName} {user.lastName}
                     </Typography>
                     <Typography variant='body2' color='white'>
-                      {'usuario.cargo'}
+                      {user.cargo}
                     </Typography>
                   </Box>
                   <ArrowDropDownOutlined
@@ -168,7 +175,8 @@ const PublicAppBar = () => {
                   <Divider />
                   <MenuItem
                     onClick={() => {
-                      console.log('Menu')
+                      logout()
+                      navigate('/')
                     }}
                   >
                     Salir
