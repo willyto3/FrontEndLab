@@ -39,7 +39,8 @@ const LoginForm = () => {
   // Se crea la constante de Navegación
   const navigate = useNavigate()
   const pantallaCompleta = useMediaQuery('(min-width:600px')
-  // Use State
+
+  // ? USE STATE
   const [showPassword, setShowPassword] = useState(false)
 
   // ? FUNCIONES

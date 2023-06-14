@@ -46,7 +46,7 @@ const columnas = () => {
       {
         field: 'role',
         headerName: 'Rol',
-        flex: 0.6,
+        flex: 0.35,
         renderCell: ({ row: { role } }) => {
           return (
             <Box

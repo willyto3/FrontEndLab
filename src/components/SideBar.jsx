@@ -35,7 +35,7 @@ const navItems = [
   },
   {
     title: 'Registro Usuarios',
-    to: 'registro',
+    to: 'registrarusuario',
     view: 'admin',
     icon: <ReceiptLongOutlined />,
   },
