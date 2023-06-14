@@ -16,6 +16,7 @@ import Error404 from '../pages/error404'
 import Index from '../pages/index'
 import Login from '../pages/login'
 import DashBoard from '../pages/dashboard'
+import Users from '../pages/users'
 
 //! FUNCIÓN ROUTER
 export const router = createBrowserRouter(
@@ -27,6 +28,7 @@ export const router = createBrowserRouter(
       </Route>
       <Route path='dashboard' element={<Protected />}>
         <Route index element={<DashBoard />} />
+        <Route path='listadousuarios' element={<Users />} />
       </Route>
     </Route>
   )

@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography'
 // ! INICIO DEL COMPONENTE HEADER
 const Header = ({ title, subtitle }) => {
   return (
-    <Box ml='3rem'>
+    <Box m='1rem 1rem'>
       <Typography
         variant='h4'
         fontWeight='bold'

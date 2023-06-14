@@ -42,7 +42,7 @@ const PublicAppBar = () => {
     ? ['inicio', 'nosotros', 'contacto']
     : ['inicio', 'nosotros', 'contacto', 'ingreso']
 
-  // Use State
+  // ? USE STATE
   const [mobileOpen, setMobileOpen] = useState(false)
   const [anchorEl, setAchorEl] = useState(null)
   const isOpen = Boolean(anchorEl)

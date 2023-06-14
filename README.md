@@ -141,3 +141,15 @@ Notistack es una Libreria que maneja los estados de nuestra aplicación.
 npm i jwt-decode
 funciones
 JWT Decode es una Libreria que Decodifica los Token realizados con JWT.
+
+### 10. MUI / X DATA GRID
+
+npm i @mui/x-data-grid
+funciones
+X Data Grid es una Libreria que nos ayuda para trabajar con tablas en React.
+
+### 11. REACT QUERY
+
+npm i react-query
+funciones
+X Data Grid es una Libreria que nos ayuda a manejar busquedas y mutaciones.
