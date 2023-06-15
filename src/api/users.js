@@ -38,15 +38,21 @@ export const getUser = async id => {
   const response = await usersAPI.get(`${userUrlEndPoint}/${id}`, {
     headers: header,
   })
+
   return response.data
 }
 
 // ? CREAR UN USUARIO
 // Se crea y exporta la Función para añadir un usuario
 export const createNewUser = async formData => {
-  const response = await usersAPI.post(`${userUrlEndPoint}`, formData, {
-    headers: header,
-  })
+  const response = await usersAPI
+    .post(`${userUrlEndPoint}`, formData, {
+      headers: header,
+    })
+    .catch(function (error) {
+      return error.response.data
+    })
+
   return response.data
 }
 

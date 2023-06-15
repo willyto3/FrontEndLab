@@ -10,7 +10,7 @@ import {
   deleteUser,
 } from '../api/users'
 
-const key = 'getUsers'
+const key = 'getAllUsers'
 
 export const useUsers = () => {
   return useQuery({ queryKey: key, queryFn: getAllUsers })
@@ -24,10 +24,7 @@ export const useCreateNewUser = () => {
   const queryClient = useQueryClient()
   return useMutation('createNewUser', createNewUser, {
     onSuccess: user => {
-      queryClient.setQueryData([
-        key,
-        prevUsers => prevUsers.concat(user),
-      ])
+      queryClient.setQueryData([key, prevUsers => prevUsers.concat(user)])
       queryClient.invalidateQueries([key])
     },
   })
@@ -39,6 +36,9 @@ export const useUpdateUser = () => {
     onSuccess: user => {
       queryClient.setQueryData([key, prevUsers => prevUsers.concat(user)])
       queryClient.invalidateQueries([key])
+    },
+    onError: error => {
+      console.log(error)
     },
   })
 }

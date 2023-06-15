@@ -6,8 +6,9 @@ import { useSnackbar } from 'notistack'
 import { useNavigate } from 'react-router-dom'
 
 // ? IMPORTACIÓN DE ELEMENTOS DE DISEÑO
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
-import { Box, Button, Typography, useMediaQuery } from '@mui/material'
+// import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
+import Box from '@mui/material/Box'
+import { Button, Typography, useMediaQuery } from '@mui/material'
 import IconButton from '@mui/material/IconButton'
 import MenuItem from '@mui/material/MenuItem'
 import InputAdornment from '@mui/material/InputAdornment'
@@ -26,7 +27,7 @@ const UserForm = () => {
   const { enqueueSnackbar } = useSnackbar()
   const navigate = useNavigate()
   const pantallaCompleta = useMediaQuery('(min-width:600px')
-  const { mutate: anadirUsuario } = useCreateNewUser()
+  const { mutate: createUser } = useCreateNewUser()
 
   // ? USE STATE
   const [cargo, setCargo] = useState('')
@@ -40,7 +41,7 @@ const UserForm = () => {
     event.preventDefault()
   }
   // Funcion para registrar un usuario
-  const registrarUsuario = async (values, onsubmitProps) => {
+  const registerUser = async (values, onsubmitProps) => {
     // this allows us to send form info with image
     const formData = new FormData()
 
@@ -48,11 +49,12 @@ const UserForm = () => {
       formData.append(value, values[value])
     }
 
-    formData.append('picturePath', values.picture.name)
+    // formData.append('picturePath', values.picture.name)
 
-    anadirUsuario(formData)
+    createUser(formData)
+
     enqueueSnackbar(
-      `Se creo el Auditor ${values.nombres} ${values.apellidos}`,
+      `Se creo el Auditor ${values.firstName} ${values.lastName}`,
       {
         variant: 'success',
         anchorOrigin: {
@@ -70,11 +72,11 @@ const UserForm = () => {
     setCargo(event.target.value)
   }
 
-// ? VISUALIZACION DEL COMPONENTE
+  // ? VISUALIZACION DEL COMPONENTE
   return (
-    <Box m='1rem 1rem'>
+    <Box>
       <Formik
-        onSubmit={registrarUsuario}
+        onSubmit={registerUser}
         initialValues={initialValues}
         validationSchema={userSchema}
         validateOnChange={false}
@@ -89,6 +91,7 @@ const UserForm = () => {
           handleSubmit,
           setFieldValue,
           resetForm,
+          isSubmitting,
         }) => (
           <Form onSubmit={handleSubmit}>
             <Box
@@ -110,8 +113,6 @@ const UserForm = () => {
                 name='firstName'
                 error={Boolean(touched.firstName) && Boolean(errors.firstName)}
                 helperText={touched.firstName && errors.firstName}
-                color='secondary'
-                backgroundColor='transparent'
                 inputProps={{
                   style: { fontSize: '20px' },
                 }}
@@ -126,8 +127,6 @@ const UserForm = () => {
                 name='lastName'
                 error={Boolean(touched.lastName) && Boolean(errors.lastName)}
                 helperText={touched.lastName && errors.lastName}
-                color='secondary'
-                backgroundColor='transparent'
                 inputProps={{
                   style: { fontSize: '20px' },
                 }}
@@ -144,8 +143,22 @@ const UserForm = () => {
                   Boolean(touched.documentID) && Boolean(errors.documentID)
                 }
                 helperText={touched.documentID && errors.documentID}
-                color='secondary'
-                backgroundColor='transparent'
+                inputProps={{
+                  style: { fontSize: '20px' },
+                }}
+                sx={{ gridColumn: 'span 2' }}
+              />
+              <TextField
+                required
+                label='Celular'
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.phoneNumber}
+                name='phoneNumber'
+                error={
+                  Boolean(touched.phoneNumber) && Boolean(errors.phoneNumber)
+                }
+                helperText={touched.phoneNumber && errors.phoneNumber}
                 inputProps={{
                   style: { fontSize: '20px' },
                 }}
@@ -160,8 +173,6 @@ const UserForm = () => {
                 name='email'
                 error={Boolean(touched.email) && Boolean(errors.email)}
                 helperText={touched.email && errors.email}
-                color='secondary'
-                backgroundColor='transparent'
                 inputProps={{
                   style: { fontSize: '20px' },
                 }}
@@ -188,10 +199,8 @@ const UserForm = () => {
                       {!values.picture ? (
                         <p>Elija la foto de Perfil</p>
                       ) : (
-                        
                           <p>{values.picture.name}</p>
                           <EditOutlinedIcon />
-                        
                       )}
                     </Box>
                   )}
@@ -209,8 +218,6 @@ const UserForm = () => {
                 name='cargo'
                 error={Boolean(touched.cargo) && Boolean(errors.cargo)}
                 helperText={touched.cargo && errors.cargo}
-                color='secondary'
-                backgroundColor='transparent'
                 inputProps={{
                   style: { fontSize: '20px' },
                 }}
@@ -226,15 +233,13 @@ const UserForm = () => {
               <TextField
                 required
                 label='Contraseña'
-                type='password'
+                type={showPassword ? 'text' : 'password'}
                 onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.password}
                 name='password'
                 error={Boolean(touched.password) && Boolean(errors.password)}
                 helperText={touched.password && errors.password}
-                color='secondary'
-                backgroundColor='transparent'
                 inputProps={{
                   style: { fontSize: '20px' },
                 }}
@@ -268,24 +273,32 @@ const UserForm = () => {
             >
               <Button
                 onClick={resetForm}
+                disabled={isSubmitting}
+                variant='outlined'
                 sx={{
                   gridColumn: 'span 2',
                   m: '2rem 0',
                   p: '1rem',
                 }}
               >
-                <Typography variant='h5'>LIMPIAR USERFORM</Typography>
+                <Typography variant='h5' letterSpacing='0.1rem'>
+                  LIMPIAR FORMULARIO
+                </Typography>
               </Button>
 
               <Button
                 type='submit'
+                disabled={isSubmitting}
+                variant='contained'
                 sx={{
                   gridColumn: 'span 2',
                   m: '2rem 0',
                   p: '1rem',
                 }}
               >
-                <Typography variant='h5'>REGISTRO</Typography>
+                <Typography variant='h5' letterSpacing='0.1rem'>
+                  REGISTRAR USUARIO
+                </Typography>
               </Button>
             </Box>
           </Form>

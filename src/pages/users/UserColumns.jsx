@@ -46,7 +46,7 @@ const columnas = () => {
       {
         field: 'role',
         headerName: 'Rol',
-        flex: 0.35,
+        flex: 0.4,
         renderCell: ({ row: { role } }) => {
           return (
             <Box
@@ -76,7 +76,7 @@ const columnas = () => {
       {
         field: 'isActive',
         headerName: '',
-        width: 50,
+        width: 30,
         renderCell: ({ row: { isActive } }) => {
           return (
             <Box

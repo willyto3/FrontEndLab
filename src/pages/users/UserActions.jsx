@@ -48,10 +48,10 @@ const UserActions = ({ params }) => {
         aria-labelledby='alert-dialog-title'
         aria-describedby='alert-dialog-description'
       >
-        <DialogTitle id='alert-dialog-title'>{'Eliminar Auditor'}</DialogTitle>
+        <DialogTitle id='alert-dialog-title'>{'Eliminar Usuario'}</DialogTitle>
         <DialogContent>
           <DialogContentText id='alert-dialog-description'>
-            ¿Esta Seguro de Eliminar este Auditor?.
+            ¿Esta Seguro de Eliminar este Usuario?.
           </DialogContentText>
         </DialogContent>
         <DialogActions>
